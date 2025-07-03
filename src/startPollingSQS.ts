@@ -98,14 +98,15 @@ export const checkForMessage = async ({
     
                 if (response && response.batchItemFailures?.length > 0) {
                     console.error('Error processing message', response.batchItemFailures);
-                } else {
-                    const deleteCommand = new DeleteMessageCommand({
-                        QueueUrl: queueUrl,
-                        ReceiptHandle: message.ReceiptHandle
-                    });
-                    await client.send(deleteCommand);
-                    if (debugLogs) console.log('Message deleted', message.MessageId);
-                }
+                } 
+                
+                const deleteCommand = new DeleteMessageCommand({
+                    QueueUrl: queueUrl,
+                    ReceiptHandle: message.ReceiptHandle
+                });
+                await client.send(deleteCommand);
+                if (debugLogs) console.log('Message deleted', message.MessageId);
+
             } catch (error) {   
                 console.error('Error processing object', error);
             }
